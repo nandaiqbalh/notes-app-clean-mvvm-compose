@@ -1,4 +1,4 @@
-package com.nandaiqbalh.notesapp.ui.theme
+package com.nandaiqbalh.notesapp.feature_note.ui.theme
 
 import android.app.Activity
 import android.os.Build
@@ -9,18 +9,23 @@ import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 
 private val DarkColorScheme = darkColorScheme(
-	primary = Purple80,
-	secondary = PurpleGrey80,
-	tertiary = Pink80
+	primary = Color.White,
+	background = DarkGray,
+	onBackground = Color.White,
+	surface = LightBlue,
+	onSurface = DarkGray
 )
 
 private val LightColorScheme = lightColorScheme(
-	primary = Purple40,
-	secondary = PurpleGrey40,
-	tertiary = Pink40
+	primary = Color.White,
+	background = Color.White,
+	onBackground = Color.DarkGray,
+	surface = DarkGray,
+	onSurface = LightBlue
 
 	/* Other default colors to override
     background = Color(0xFFFFFBFE),

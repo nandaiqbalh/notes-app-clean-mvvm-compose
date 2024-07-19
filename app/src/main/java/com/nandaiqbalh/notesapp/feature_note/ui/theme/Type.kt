@@ -1,4 +1,4 @@
-package com.nandaiqbalh.notesapp.ui.theme
+package com.nandaiqbalh.notesapp.feature_note.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

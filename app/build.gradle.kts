@@ -1,7 +1,8 @@
 plugins {
 	alias(libs.plugins.android.application)
 	alias(libs.plugins.jetbrains.kotlin.android)
-
+	id("kotlin-kapt")
+	id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -67,4 +68,31 @@ dependencies {
 	androidTestImplementation(libs.androidx.ui.test.junit4)
 	debugImplementation(libs.androidx.ui.tooling)
 	debugImplementation(libs.androidx.ui.test.manifest)
+
+	// Compose dependencies
+	implementation ("androidx.lifecycle:lifecycle-viewmodel-compose:2.4.0-beta01")
+	implementation ("androidx.navigation:navigation-compose:2.4.0-alpha09")
+	implementation ("androidx.compose.material:material-icons-extended:2.4.0-alpha09")
+
+	// Coroutines
+	implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.0")
+	implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.1")
+
+	//Dagger Hilt
+	implementation("com.google.dagger:hilt-android:2.48")
+	kapt("com.google.dagger:hilt-compiler:2.48")
+	kapt ("androidx.hilt:hilt-compiler:1.0.0")
+	implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
+
+	//Room
+	val room_version = "2.6.1"
+
+	implementation("androidx.room:room-runtime:$room_version")
+	annotationProcessor("androidx.room:room-compiler:$room_version")
+
+	// To use Kotlin annotation processing tool (kapt)
+	kapt("androidx.room:room-compiler:$room_version")
+
+	// optional - Kotlin Extensions and Coroutines support for Room
+	implementation("androidx.room:room-ktx:$room_version")
 }
