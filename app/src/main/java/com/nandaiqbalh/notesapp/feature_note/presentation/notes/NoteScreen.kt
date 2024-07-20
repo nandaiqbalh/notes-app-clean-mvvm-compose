@@ -24,6 +24,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Text
@@ -32,11 +33,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.nandaiqbalh.notesapp.feature_note.presentation.notes.components.NoteItem
 import com.nandaiqbalh.notesapp.feature_note.presentation.notes.components.OrderSection
+import com.nandaiqbalh.notesapp.feature_note.presentation.util.Screen
 import kotlinx.coroutines.launch
 
 @Composable
@@ -50,13 +53,16 @@ fun NoteScreen(
 	val scope = rememberCoroutineScope()
 
 	Scaffold(
+		snackbarHost = { SnackbarHost(snackbarHostState) }, // Added SnackbarHost here
 		floatingActionButton = {
 			FloatingActionButton(
-				onClick = { },
-				containerColor = MaterialTheme.colorScheme.primary
+				onClick = {
+					navController.navigate(Screen.AddEditNoteScreen.route)
+				},
+				containerColor = MaterialTheme.colorScheme.primaryContainer
 			) {
 
-				Icon(imageVector = Icons.Default.Add, contentDescription = "Add Note")
+				Icon(imageVector = Icons.Default.Add, tint = MaterialTheme.colorScheme.onPrimaryContainer, contentDescription = "Add Note")
 
 			}
 		},
@@ -75,12 +81,12 @@ fun NoteScreen(
 				verticalAlignment = Alignment.CenterVertically
 			) {
 
-				Text(text = "Notes App", style = MaterialTheme.typography.headlineLarge)
+				Text(text = "Notes App", style = MaterialTheme.typography.headlineLarge, color = MaterialTheme.colorScheme.primary)
 
 				IconButton(onClick = {
 					viewModel.onEvent(NotesEvent.ToggleOrderSection)
 				}) {
-					Icon(imageVector = Icons.Default.Menu, contentDescription = "Sort Note")
+					Icon(imageVector = Icons.Default.Menu, tint = MaterialTheme.colorScheme.primary, contentDescription = "Sort Note")
 
 				}
 
@@ -105,11 +111,27 @@ fun NoteScreen(
 			Spacer(modifier = Modifier.height(16.dp))
 
 			LazyColumn(modifier = Modifier.fillMaxSize()) {
+
+				if (state.notes.isEmpty()) {
+					item {
+						Text(
+							text = "No notes found.",
+							style = MaterialTheme.typography.bodyLarge,
+							color = Color.Gray,
+							modifier = Modifier.fillMaxWidth(),
+						)
+					}
+				}
 				items(state.notes) { note ->
 					NoteItem(note = note,
 						modifier = Modifier
 							.fillMaxWidth()
-							.clickable {},
+							.clickable {
+								navController.navigate(
+									Screen.AddEditNoteScreen.route +
+											"?noteId=${note.id}&noteColor=${note.color}"
+								)
+							},
 						onDeleteClick = {
 							viewModel.onEvent(NotesEvent.DeleteNote(note))
 
@@ -125,7 +147,7 @@ fun NoteScreen(
 							}
 						}
 					)
-					
+
 					Spacer(modifier = Modifier.height(16.dp))
 
 				}

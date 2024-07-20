@@ -23,8 +23,8 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.SnackbarResult
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
@@ -34,14 +34,11 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
-import androidx.core.os.trace
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.nandaiqbalh.notesapp.feature_note.domain.model.Note
 import com.nandaiqbalh.notesapp.feature_note.presentation.add_edit_note.components.TransparentHintTextField
-import com.nandaiqbalh.notesapp.feature_note.presentation.notes.NotesEvent
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -83,12 +80,13 @@ fun AddEditNoteScreen(
 	}
 
 	Scaffold(
+		snackbarHost = { SnackbarHost(snackbarHostState) }, // Added SnackbarHost here
 		floatingActionButton = {
 			FloatingActionButton(onClick = {
 				viewModel.onEvent(AddEditNoteEvent.SaveNote)
-			}, containerColor = MaterialTheme.colorScheme.primary) {
+			}, containerColor = MaterialTheme.colorScheme.primaryContainer) {
 
-				Icon(imageVector = Icons.Default.CheckCircle, contentDescription = "Save Note")
+				Icon(imageVector = Icons.Default.CheckCircle, tint = MaterialTheme.colorScheme.onPrimaryContainer, contentDescription = "Save Note")
 			}
 		}
 	) {
@@ -168,7 +166,7 @@ fun AddEditNoteScreen(
 					viewModel.onEvent(AddEditNoteEvent.ChangeContentFocus(it))
 				},
 				isHintVisible = contentState.isHintVisible,
-				textStyle = MaterialTheme.typography.bodySmall,
+				textStyle = MaterialTheme.typography.bodyLarge,
 				modifier = Modifier.fillMaxHeight()
 			)
 		}

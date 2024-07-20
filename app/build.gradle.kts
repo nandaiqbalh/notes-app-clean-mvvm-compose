@@ -72,7 +72,6 @@ dependencies {
 	// Compose dependencies
 	implementation ("androidx.lifecycle:lifecycle-viewmodel-compose:2.4.0-beta01")
 	implementation ("androidx.navigation:navigation-compose:2.4.0-alpha09")
-	implementation ("androidx.compose.material:material-icons-extended:2.4.0-alpha09")
 
 	// Coroutines
 	implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.0")
